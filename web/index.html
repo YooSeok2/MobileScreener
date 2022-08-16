@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="manifest" href="./manifest.json">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="나의 투자 스타일에 맞는 모델 포트폴리오를 찾을 때">
+    <meta name="author" content="KALECODE">
+    <meta name="keywords" content="케일스크리너">
+    <meta name="theme-color" content="#1F9A68">
+
+    <meta name="msapplication-navbutton-color" content="#1F9A68">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+
+    <meta name="twitter:card" content="https://kaleplay.com/iconset/share_banner.png">
+    <meta name="twitter:image:alt" content="나의 투자 스타일에 맞는 모델 포트폴리오를 찾을 때">
+
+    <meta property="og:url" content="https://kaleplay.com/">
+    <meta property="og:site_name" content="케일스크리너">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="케일스크리너">
+    <meta property="og:image" content="https://kaleplay.com/iconset/share_banner.png">
+    <meta property="og:description" content="나의 투자 스타일에 맞는 모델 포트폴리오를 찾을 때">
+
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#1F9A68-translucent">
+    <meta name="apple-mobile-web-app-title" content="케일스크리너">
+
+    <link rel="shortcut icon" href="./iconset/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="36x36" href="./iconset/android-icon-36x36.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="./iconset/android-icon-48x48.png">
+    <link rel="icon" type="image/png" sizes="72x72" href="./iconset/android-icon-72x72.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./iconset/android-icon-96x96.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="./iconset/android-icon-144x144.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./iconset/android-icon-192x192.png">
+
+    <link rel="apple-touch-icon" type="image/png" sizes="36x36" href="./iconset/android-icon-36x36.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="48x48" href="./iconset/android-icon-48x48.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="./iconset/android-icon-72x72.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="96x96" href="./iconset/android-icon-96x96.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="./iconset/android-icon-144x144.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="./iconset/android-icon-192x192.png">
+
+    <!-- css -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/mobile.css">
+    <link rel="stylesheet" href="./css/detail.css">
+    <!-- js -->
+    <script>
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
+    <script src="https://kaleapps.s3.ap-northeast-2.amazonaws.com/shared/jquery-1.12.4.min.js"></script>
+    <script src="https://apis.kaleplay.com/js/kaleplay-sdk.platform.js"></script>
+    <script src="https://kaleapps.s3.ap-northeast-2.amazonaws.com/shared/fastLoop-1.0.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://kaleapps.s3.ap-northeast-2.amazonaws.com/shared/ag-grid-enterprise.min.js"></script>
+    <script src="https://kaleapps.s3.ap-northeast-2.amazonaws.com/shared/echarts502.min.js"></script>
+    <script src="https://kaleapps.s3.ap-northeast-2.amazonaws.com/shared/moment.min.js"></script>
+    <script src="https://kaleapps.s3.ap-northeast-2.amazonaws.com/shared/sammy-latest.min.js"></script>
+    <script kalescreener_mobile src="./js/app.mobile.js"></script>
+    <script kalescreener_mobile src="./js/app.license.js"></script>
+    <script kalescreener_mobile src="./js/app.methods.js"></script>
+    <script kalescreener_mobile src="./js/filter.option.js"></script>
+    <script kalescreener_mobile src="./js/app.agGrid.formatter.js"></script>
+    <script kalescreener_mobile src="./js/app.agGrid.field_option.js"></script>
+    <script kalescreener_mobile src="./js/app.agGrid.field_maker.js"></script>
+    <script kalescreener_mobile src="./js/app.agGrid.field_set.js"></script>
+    <script kalescreener_mobile src="./js/app.agGrid.js"></script>
+    <script kalescreener_mobile src="./js/mobile.js"></script>
+    <script kalescreener_mobile src="./js/mobile.detail.js"></script>
+    <script kalescreener_mobile src="./js/mobile.start.js"></script>
+
+    <title>케일스크리너 - 본인의 투자 스타일에 맞는 데이터 검색</title>
+</head>
+
+<body>
+    <div class="main" id="home">
+        <div class="header">
+            <div class="search-button">
+                <i class="fal fa-search"></i>
+            </div>
+            <input type="text" id="searchBox" placeholder='종목명을 입력해주세요' value="">
+            <div class="close_button">
+                <i class="fad fa-times-circle"></i>
+            </div>
+        </div>
+        <div class="filter">
+            <ul class="tab_title">
+                <li class="popular">인기조건</li>
+                <li class="stock">주가</li>
+                <li class="fundamentals">펀더멘탈</li>
+                <li class="opr-profit">영업매출이익</li>
+                <li class="etc-config">기타조건</li>
+            </ul>
+            <div class="tab_cont">
+                <div class="tab-cont-wrap">
+                    <div class="tab-cont-body" id="popular">
+                        <div class="marketcap">
+                            <span>시가총액</span>
+                            <select id="marketcap-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="marketcap-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="per">
+                            <span>PER</span>
+                            <select id="per-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="per-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="dividend-yield">
+                            <span>배당수익률</span>
+                            <select id="dps_r-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="dps_r-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="now-price">
+                            <span>현재가</span>
+                            <select id="price-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="price-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="sameday-rate">
+                            <span>당일등락률</span>
+                            <select id="ratio-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="ratio-max">
+                                <option value="no_max">최대없음</option>                             
+                            </select>
+                        </div>
+                        <div class="pbr">
+                            <span>PBR</span>
+                            <select id="pbr-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="pbr-max">
+                                <option value="no_max">최대없음</option>                             
+                            </select>
+                        </div>
+                        <div class="roe">
+                            <span>ROE</span>
+                            <select id="roe-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="roe-max">
+                                <option value="no_max">최대없음</option>                             
+                            </select>
+                        </div>
+                    </div>
+                    <section class="tab-cont-bottom">
+                        <button class="filter-reset">필터 초기화</button>
+                        <div class="only-favorite"><i class="fas fa-star color-g"></i><span>관심종목만</span></div>
+                        <div class="hide-button">
+                            <i class="fal fa-chevron-up"></i>
+                        </div>
+                    </section>
+                </div>
+                <div class="tab-cont-wrap">
+                    <div class="tab-cont-body" id="stock">
+                        <div class="flucrate-week">
+                            <span>1주일(등락률)</span>
+                            <select id="chg_1w-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="chg_1w-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="flucrate-month">
+                            <span>1개월(등락률)</span>
+                            <select id="chg_1m-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="chg_1m-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="flucrate-3month">
+                            <span>3개월(등락률)</span>
+                            <select id="chg_3m-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="chg_3m-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="flucrate-6month">
+                            <span>6개월(등락률)</span>
+                            <select id="chg_6m-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="chg_6m-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="flucrate-year">
+                            <span>1년(등락률)</span>
+                            <select id="chg_1y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="chg_1y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="movavg-50">
+                            <span>50일이평(%)</span>
+                            <select id="diff_sma50-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="diff_sma50-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="movavg-200">
+                            <span>200일이평(%)</span>
+                            <select id="diff_sma200-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="diff_sma200-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="cagr2">
+                            <span>2년(CAGR %)</span>
+                            <select id="cagr_2y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="cagr_2y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="cagr3">
+                            <span>3년(CAGR %)</span>
+                            <select id="cagr_3y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="cagr_3y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="cagr5">
+                            <span>5년(CAGR %)</span>
+                            <select id="cagr_5y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="cagr_5y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="cagr10">
+                            <span>10년(CAGR %)</span>
+                            <select id="cagr_10y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="cagr_10y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="cagr15">
+                            <span>15년(CAGR %)</span>
+                            <select id="cagr_15y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="cagr_15y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="cagr20">
+                            <span>20년(CAGR %)</span>
+                            <select id="cagr_20y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="cagr_20y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="cagr30">
+                            <span>30년(CAGR %)</span>
+                            <select id="cagr_30y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="cagr_30y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                    </div>
+                    <section class="tab-cont-bottom">
+                        <button class="filter-reset">필터 초기화</button>
+                        <div class="only-favorite"><i class="fas fa-star color-g"></i><span>관심종목만</span></div>
+                        <div class="hide-button">
+                            <i class="fal fa-chevron-up"></i>
+                        </div>
+                    </section>
+                </div>
+                <div class="tab-cont-wrap">
+                    <div class="tab-cont-body" id="fundamentals">
+                        <div class="operating-margin">
+                            <span>영업이익률</span>
+                            <select id="opm-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="opm-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="profit-margin">
+                            <span>순이익률</span>
+                            <select id="npm-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="npm-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="peg">
+                            <span>PEG</span>
+                            <select id="peg-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="peg-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="pcr">
+                            <span>PCR</span>
+                            <select id="pcr-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="pcr-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="psr">
+                            <span>PSR</span>
+                            <select id="psr-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="psr-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="roa">
+                            <span>ROA</span>
+                            <select id="roa-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="roa-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="current-ratio">
+                            <span>유동비율</span>
+                            <select id="crr-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="crr-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="debt-ratio">
+                            <span>부채비율</span>
+                            <select id="der-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="der-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                    </div>
+                    <section class="tab-cont-bottom">
+                        <button class="filter-reset">필터 초기화</button>
+                        <div class="only-favorite"><i class="fas fa-star color-g"></i><span>관심종목만</span></div>
+                        <div class="hide-button">
+                            <i class="fal fa-chevron-up"></i>
+                        </div>
+                    </section>
+                </div>
+                <div class="tab-cont-wrap">
+                    <div class="tab-cont-body" id="opr-profit">
+                        <div class="increase-1yslaes">
+                            <span>1년매출증가(%)</span>
+                            <select id="sales_growth_1y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="sales_growth_1y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-2yslaes">
+                            <span>2년매출증가(%)</span>
+                            <select id="sales_growth_2y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="sales_growth_2y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-3yslaes">
+                            <span>3년매출증가(%)</span>
+                            <select id="sales_growth_3y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="sales_growth_3y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-4yslaes">
+                            <span>4년매출증가(%)</span>
+                            <select id="sales_growth_4y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="sales_growth_4y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-5yslaes">
+                            <span>5년매출증가(%)</span>
+                            <select id="sales_growth_5y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="sales_growth_5y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-1yoperating">
+                            <span>1년영업이익증가(%)</span>
+                            <select id="business_profit_growth_1y-min" name="hi">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="business_profit_growth_1y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-2yoperating">
+                            <span>2년영업이익증가(%)</span>
+                            <select id="business_profit_growth_2y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="business_profit_growth_2y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-3yoperating">
+                            <span>3년영업이익증가(%)</span>
+                            <select id="business_profit_growth_3y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="business_profit_growth_3y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-4yoperating">
+                            <span>4년영업이익증가(%)</span>
+                            <select id="business_profit_growth_4y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="business_profit_growth_4y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-5yoperating">
+                            <span>5년영업이익증가(%)</span>
+                            <select id="business_profit_growth_5y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="business_profit_growth_5y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-1yincome">
+                            <span>1년순이익증가(%)</span>
+                            <select id="net_income_growth_1y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="net_income_growth_1y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-2yincome">
+                            <span>2년순이익증가(%)</span>
+                            <select id="net_income_growth_2y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="net_income_growth_2y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-3yincome">
+                            <span>3년순이익증가(%)</span>
+                            <select id="net_income_growth_3y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="net_income_growth_3y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-4yincome">
+                            <span>4년순이익증가(%)</span>
+                            <select id="net_income_growth_4y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="net_income_growth_4y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="increase-5yincome">
+                            <span>5년순이익증가(%)</span>
+                            <select id="net_income_growth_5y-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="net_income_growth_5y-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                    </div>
+                    <section class="tab-cont-bottom">
+                        <button class="filter-reset">필터 초기화</button>
+                        <div class="only-favorite"><i class="fas fa-star color-g"></i><span>관심종목만</span></div>
+                        <div class="hide-button">
+                            <i class="fal fa-chevron-up"></i>
+                        </div>
+                    </section>
+                </div>
+                <div class="tab-cont-wrap">
+                    <div class="tab-cont-body" id="etc-config">
+                        <div class="fair-value">
+                            <span>적정주가대비</span>
+                            <select id="vprice_ratio-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="vprice_ratio-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="ncav">
+                            <span>NCAV</span>
+                            <select id="ncav-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="ncav-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                        <div class="beta">
+                            <span>BETA</span>
+                            <select id="beta-min">
+                                <option value="no_min" >최소없음</option>
+                            </select>
+                            <select id="beta-max">
+                                <option value="no_max">최대없음</option>
+                            </select>
+                        </div>
+                    </div>
+                    <section class="tab-cont-bottom">
+                        <button class="filter-reset">필터 초기화</button>
+                        <div class="only-favorite"><i class="fas fa-star color-g"></i><span>관심종목만</span></div>
+                        <div class="hide-button">
+                            <i class="fal fa-chevron-up"></i>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            
+        </div>
+        <div class="list">
+            <div class="tbody"></div>
+        </div>
+    </div>
+
+    <div class="detail-main" id="detail">
+        <div class="detail-header">
+            <div class="back-btn">
+                <a href="/com.kalecode.kalescreener_mobile/index.html"><i class="far fa-arrow-left"></i></a>
+                <!-- <a href="/index.html"><i class="far fa-arrow-left"></i></a> -->
+            </div>
+            <h4 class="stock-name"></h4>
+            <span class="stock-code"></span>
+        </div>
+        <div id="chart" class="chart"></div>
+        <div class="cont-wrap">
+            <div class="summary">
+                <h4 class="cont-title">개요</h4>
+                <div class="cont-box">
+                    <div class="one-box">
+                        <span class="box-title">산업구분</span>
+                        <span class="industry">휴대폰 및 관련부품</span>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">시가총액<br><p>(억원)</p></span>
+                            <span class="marketcap num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">배당수익률<br><p>(배당금/주가)</p></span>
+                            <span class="dps_r num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">적정주가<br><p>(원)</p></span>
+                            <span class="vprice num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">적정주가<br><p>(괴리도 %)</p></span>
+                            <span class="vprice_ratio num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">EPS<br><p>(순이익/주식수)</p></span>
+                            <span class="eps num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">PER<br><p>(시가총액/순이익)</p></span>
+                            <span class="per num-type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="sector-detail">
+                <h4 class="cont-title">섹터상세</h4>
+                <div class="cont-box">
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">시장</span>
+                            <span class="market_full"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">섹터</span>
+                            <span class="sector"></span>
+                        </div>
+                    </div>
+                    <div class="one-box">
+                        <span class="box-title">테마</span>
+                        <span class="tmname"></span>
+                    </div>
+                    <div class="one-box">
+                        <span class="box-title">피어</span>
+                        <span class="peer"></span>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="short-term-stock">
+                <h4 class="cont-title">단기주가</h4>
+                <div class="cont-box">
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">1개월<br><p>(등락률 %)</p></span>
+                            <span class="chg_1m num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">3개월<br><p>(등락률 %)</p></span>
+                            <span class="chg_3m num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">6개월<br><p>(등락률 %)</p></span>
+                            <span class="chg_6m num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">1년<br><p>(등락률 %)</p></span>
+                            <span class="chg_1y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">50일 이평<br><p>(이평선이격도 %)</p></span>
+                            <span class="diff_sma50 num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">200일 이평<br><p>(이평선이격도 %)</p></span>
+                            <span class="diff_sma200 num-type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="long-term-stock">
+                <h4 class="cont-title">장기주가</h4>
+                <div class="cont-box">
+                    <div class="three-box">
+                        <div class="box1">
+                            <span class="box-title">2년<br><p>(CAGR %)</p></span>
+                            <span class="cagr_2y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">5년<br><p>(CAGR %)</p></span>
+                            <span class="cagr_5y num-type"></span>
+                        </div>
+                        <div class="box3">
+                            <span class="box-title">10년<br><p>(CAGR %)</p></span>
+                            <span class="cagr_10y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="three-box">
+                        <div class="box1">
+                            <span class="box-title">15년<br><p>(CAGR %)</p></span>
+                            <span class="cagr_15y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">20년<br><p>(CAGR %)</p></span>
+                            <span class="cagr_20y num-type"></span>
+                        </div>
+                        <div class="box3">
+                            <span class="box-title">30년<br><p>(CAGR %)</p></span>
+                            <span class="cagr_30y num-type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="growth-potential">
+                <h4 class="cont-title">성장성</h4>
+                <div class="cont-box">
+                    <div class="three-box">
+                        <div class="box1">
+                            <span class="box-title">PER<br><p>(시가총액/순이익)</p></span>
+                            <span class="per num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">PSR<br><p>(시가총액/매출)</p></span>
+                            <span class="psr num-type"></span>
+                        </div>
+                        <div class="box3">
+                            <span class="box-title">PEG<br><p>(PER/순이익증가율)</p></span>
+                            <span class="peg num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">영업이익률<br><p>(영업이익/매출)</p></span>
+                            <span class="opm num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">순이익률<br><p>(순이익/매출)</p></span>
+                            <span class="npm num-type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="stability">
+                <h4 class="cont-title">안정성</h4>
+                <div class="cont-box">
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">PBR<br><p>(시가총액/순자산)</p></span>
+                            <span class="pbr num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">PCR<br><p>(시가총액/현금흐름)</p></span>
+                            <span class="pcr num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">ROE<br><p>(순이익/자기자본)</p></span>
+                            <span class="roe num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">ROA<br><p>(순이익/총자산)</p></span>
+                            <span class="roa num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">유동비율<br><p>(유동자산/유동부채)</p></span>
+                            <span class="crr num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">부채비율<br><p>(부채총계/자본총계)</p></span>
+                            <span class="der num-type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="sales">
+                <h4 class="cont-title">매출</h4>
+                <div class="cont-box">
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">1년매출증가<br><p>(전년대비 %)</p></span>
+                            <span class="sales_growth_1y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">2년매출증가<br><p>(전년대비 %)</p></span>
+                            <span class="sales_growth_2y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="three-box">
+                        <div class="box1">
+                            <span class="box-title">3년매출증가<br><p>(전년대비 %)</p></span>
+                            <span class="sales_growth_3y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">4년매출증가<br><p>(전년대비 %)</p></span>
+                            <span class="sales_growth_4y num-type"></span>
+                        </div>
+                        <div class="box3">
+                            <span class="box-title">5년매출증가<br><p>(전년대비 %)</p></span>
+                            <span class="sales_growth_5y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">1년전매출<br><p>(억원)</p></span>
+                            <span class="sales_1y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">2년전매출<br><p>(억원)</p></span>
+                            <span class="sales_2y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="three-box">
+                        <div class="box1">
+                            <span class="box-title">3년전매출<br><p>(억원)</p></span>
+                            <span class="sales_3y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">4년전매출<br><p>(억원)</p></span>
+                            <span class="sales_4y num-type"></span>
+                        </div>
+                        <div class="box3">
+                            <span class="box-title">5년전매출<br><p>(억원)</p></span>
+                            <span class="sales_5y num-type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="operating-profit">
+                <h4 class="cont-title">영업이익</h4>
+                <div class="cont-box">
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">1년영업이익증가<br><p>(전년대비 %)</p></span>
+                            <span class="business_profit_growth_1y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">2년영업이익증가<br><p>(전년대비 %)</p></span>
+                            <span class="business_profit_growth_2y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">3년영업이익증가<br><p>(전년대비 %)</p></span>
+                            <span class="business_profit_growth_3y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">4년영업이익증가<br><p>(전년대비 %)</p></span>
+                            <span class="business_profit_growth_4y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">1년전영업이익<br><p>(억원)</p></span>
+                            <span class="business_profit_1y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">2년전영업이익<br><p>(억원)</p></span>
+                            <span class="business_profit_2y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">3년전영업이익<br><p>(억원)</p></span>
+                            <span class="business_profit_3y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">4년전영업이익<br><p>(억원)</p></span>
+                            <span class="business_profit_4y num-type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="net-income">
+                <h4 class="cont-title">순이익</h4>
+                <div class="cont-box">
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">1년순이익증가<br><p>(전년대비 %)</p></span>
+                            <span class="net_income_growth_1y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">2년순이익증가<br><p>(전년대비 %)</p></span>
+                            <span class="net_income_growth_2y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="three-box">
+                        <div class="box1">
+                            <span class="box-title">3년순이익증가<br><p>(전년대비 %)</p></span>
+                            <span class="net_income_growth_3y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">4년순이익증가<br><p>(전년대비 %)</p></span>
+                            <span class="net_income_growth_4y num-type"></span>
+                        </div>
+                        <div class="box3">
+                            <span class="box-title">5년순이익증가<br><p>(전년대비 %)</p></span>
+                            <span class="net_income_growth_5y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">1년전순이익<br><p>(억원)</p></span>
+                            <span class="net_income_1y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">2년전순이익<br><p>(억원)</p></span>
+                            <span class="net_income_2y num-type"></span>
+                        </div>
+                    </div>
+                    <div class="three-box">
+                        <div class="box1">
+                            <span class="box-title">3년전순이익<br><p>(억원)</p></span>
+                            <span class="net_income_3y num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">4년전순이익<br><p>(억원)</p></span>
+                            <span class="net_income_4y num-type"></span>
+                        </div>
+                        <div class="box3">
+                            <span class="box-title">5년전순이익<br><p>(억원)</p></span>
+                            <span class="net_income_5y num-type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="etc">
+                <h4 class="cont-title">기타</h4>
+                <div class="cont-box">
+                    <div class="two-box">
+                        <div class="box1">
+                            <span class="box-title">NCAV<br><p>(유동자산-총부채/시총 %)</p></span>
+                            <span class="ncav num-type"></span>
+                        </div>
+                        <div class="box2">
+                            <span class="box-title">BETA<br><p>(코스피지수대비)</p></span>
+                            <span class="beta num-type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+</body>
+
+</html>

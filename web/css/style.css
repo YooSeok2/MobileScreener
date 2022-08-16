@@ -1,0 +1,180 @@
+/* 전체페이지 적용 */
+
+@font-face {
+    font-family: 'noto';
+    src: local('noto'), url('../fonts/NotoSansKR-Bold.otf')format('opentype');
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: 'noto';
+    src: local('noto'), url('../fonts/NotoSansKR-Medium.otf')format('opentype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'noto';
+    src: local('noto'), url('../fonts/NotoSansKR-Regular.otf')format('opentype');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'noto';
+    src: local('noto'), url('../fonts/NotoSansKR-Light.otf')format('opentype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'roboto';
+    src: local('roboto'), url('../fonts/Roboto-Bold.ttf')format('truetype');
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: 'roboto';
+    src: local('roboto'), url('../fonts/Roboto-Medium.ttf')format('truetype');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'roboto';
+    src: local('roboto'), url('../fonts/Roboto-Light.ttf')format('truetype');
+    font-weight: 300;
+}
+
+html {
+    max-width: 560px;
+    height: 100%;
+    overflow-x: hidden;
+    margin: 0 auto;
+    background: rgb(92 92 92);
+}
+
+body {
+    margin: 0;
+    -ms-overflow-style: none;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: none;
+    -ms-overflow-style: none;
+    font-family: 'noto', 'roboto', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+}
+
+body::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: transparent !important;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: transparent !important;
+}
+
+div {
+    -ms-overflow-style: none;
+}
+
+div::-webkit-scrollbar {
+    display: none;
+}
+
+a:link {
+    text-decoration: none;
+    color: #1d1d1f;
+}
+
+a:visited {
+    color: #1d1d1f;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1d1d1f;
+    text-decoration: none;
+}
+
+input:focus {
+    outline: 2px solid #1d1d1f;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+body,
+button,
+dd,
+dl,
+dt,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+legend,
+li,
+ol,
+p,
+select,
+table,
+td,
+textarea,
+th,
+ul,
+div,
+section,
+span,
+i {
+    margin: 0;
+    padding: 0;
+}
+
+.minus {
+    color: #0000ff !important;
+}
+
+.plus {
+    color: #ff0000 !important;
+}
+
+body {
+    outline: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-focus-ring-color: transparent;
+    outline: 0;
+    background: #fff;
+}
+
+input {
+    -webkit-user-select: auto;
+    -khtml-user-select: auto;
+    -moz-user-select: -moz-all;
+    -o-user-select: auto;
+    user-select: auto;
+}
+
+button,
+a,
+select {
+    outline: 0;
+}
+
+.num-type {
+    font-family: 'roboto';
+}

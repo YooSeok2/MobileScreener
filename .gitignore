@@ -1,0 +1,17 @@
+.vscode/
+build/
+build_ready/
+dist/
+keys/
+node_modules/
+testkey.txt
+info.txt
+.codebeatignore
+main.js
+package-lock.json
+tools/
+assets/
+web/fonts/
+web/iconset/
+web/images/
+web/img_detail/
